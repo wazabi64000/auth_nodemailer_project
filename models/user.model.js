@@ -1,0 +1,47 @@
+import { db } from "../config/db.js";
+
+// create User
+export const createUser = async (
+  email,
+  passwordHash,
+  verifyToken,
+  role = "USER" ) => {
+  const [result] = await db.query(
+    "INSERT INTO users (email, password_hash, verify_token, role) VALUES (?, ? , ? , ? ) ",
+    [email, passwordHash, verifyToken, role],
+  );
+
+  return result.insertId;
+};
+
+// login trouver un user par son mail 
+
+export const findUserByEmail = async (email) => {
+  const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+  return rows[0];
+};
+
+export const findUserByVerifyToken = async (token) => {
+  const [rows] = await db.query("SELECT * FROM users WHERE verify_token=?", [
+    token
+  ]);
+  return rows[0];
+};
+
+export const verifyUser = async (userId) => {
+  await db.query(
+    "UPDATE users SET is_verified=1 , verify_token=NULL WHERE id= ?",
+    [userId],
+  );
+};
+
+
+
+export const updatePassword = async (userId, passwordHash) => {
+
+    await db.query('UPDATE users SET password_hash=?  WHERE id = ?', [passwordHash, userId])
+}
+
+export const saveResetPassword = async (userId, token ) => {
+    await db.query('UPDATE users SET reset_token=? WHERE id=? ',  [token , userId])
+}

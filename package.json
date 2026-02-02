@@ -1,0 +1,36 @@
+{
+  "dependencies": {
+    "argon2": "^0.44.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.16.2",
+    "nodemailer": "^7.0.13",
+    "uuid": "^13.0.0",
+    "zod": "^4.3.6"
+  },
+  "type": "module",
+  "name": "auth_nodemailer_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wazabi64000/auth_nodemailer_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wazabi64000/auth_nodemailer_project/issues"
+  },
+  "homepage": "https://github.com/wazabi64000/auth_nodemailer_project#readme"
+}
