@@ -36,6 +36,12 @@ export const verifyUser = async (userId) => {
 };
 
 
+export const findUserByResetToken=  async (token) => {
+  const [rows] =await db.query('SELECT * FROM users WHERE reset_token=?', [token])
+  return rows[0]
+}
+
+
 
 export const updatePassword = async (userId, passwordHash) => {
 

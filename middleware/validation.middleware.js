@@ -16,7 +16,7 @@ export const validateRegister = (req, res, next) => {
 
     next();
   } catch (e) {
-    return res.status(400).json({ message: e.errors.map( err => err.message).join(", ") });
+    return res.status(400).json({ message: e.issues.map( err => err.message).join(", ") });
   }
 };
 
@@ -33,6 +33,24 @@ export const validateLogin = (req, res, next) => {
   } catch (error) {
     return res
       .status(400)
-      .json({ message: error.errors.map((err) => err.message).join(", ") });
+      .json({ message: error.issues.map((err) => err.message).join(", ") });
+  }
+};
+
+
+export const validateResetPasswordRequest = (req, res, next) => {
+  const schema = z.object({
+    email: z.email("L’adresse email n’est pas valide"),
+ 
+  });
+
+  try {
+    schema.parse(req.body);
+
+    next();
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: error.issues.map((err) => err.message).join(", ") });
   }
 };

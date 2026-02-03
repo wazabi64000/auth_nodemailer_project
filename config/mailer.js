@@ -25,12 +25,25 @@ transporter.verify((err, success) => {
 export const sendVerificationMail = async (email, token) => {
 
     await transporter.sendMail({
-        from: 'Authentification API  <your_brevo_email>',
+        from: 'Authentification API  <wazabi64000@gmail.com>',
         to: email,
         subject: 'Confirmez votre email',
         html: `<h2>   Bienvenue ${email} ! </h2>
         <p> Merci pour votre inscription , veuillez clique sur le lien ci-dessous pour vérifier cotre email:  </p> <br/>
         <a href="http://localhost:5000/api/auth/verify?token=${token}">Vérifier mon email</a>`
+    })
+}
+
+
+export const sendResetPasswordEmail = async (email, token) => {
+
+    await transporter.sendMail({
+        from: 'Verification API  <wazabi64000@gmail.com>',
+        to: email,
+        subject: 'Rénitialisation de la passwordé',
+        html: `<h2>   Bienvenue ${email} ! </h2>
+        <p> Cliquez sur le lien pour rénitialiser votre mot de passe :  </p> <br/>
+        <a href="http://localhost:5000/api/auth/reset-password-request?token=${token}">rénitialiser votre mot de passe </a>`
     })
 }
 
