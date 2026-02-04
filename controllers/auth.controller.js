@@ -17,6 +17,7 @@ import {
   sendVerificationMail,
 } from "../config/mailer.js";
 
+
 export const register = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -31,7 +32,7 @@ export const register = async (req, res) => {
 
     await sendVerificationMail(email, verifyToken);
 
-    res.status(201).json({ message: "Compte créé , vérifier votre email" });
+    res.status(201).json({ message: "Compte créé , vérifier votre email", email });
   } catch (error) {
     res.status(500).json({ message: "erreur serveur ", error: error.message });
   }
@@ -49,11 +50,12 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-// Login Crtroller
+// //Login Crtroller
 // export const login = async (req, res) => {
 //   try {
 //     const { email, password } = req.body;
 //     const user = await findUserByEmail(email);
+
 //     if (!user)
 //       return res
 //         .status(400)
@@ -75,9 +77,7 @@ export const verifyEmail = async (req, res) => {
 //   }
 // };
 
-
-
-// login résolé 
+// login résolé
 
 export const login = async (req, res) => {
   try {
@@ -91,9 +91,7 @@ export const login = async (req, res) => {
     }
 
     if (!user.is_verified) {
-      return res
-        .status(403)
-        .json({ message: "Compte non vérifié" });
+      return res.status(403).json({ message: "Compte non vérifié" });
     }
 
     const valid = await argon2.verify(user.password_hash, password);
@@ -106,18 +104,16 @@ export const login = async (req, res) => {
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN }
+      { expiresIn: process.env.JWT_EXPIRES_IN },
     );
 
     return res.status(200).json({ token });
-
   } catch (error) {
     return res.status(500).json({
       message: "Erreur serveur",
     });
   }
 };
-
 
 // ResetPassword
 
